@@ -21,7 +21,7 @@ jobs:
       - name: Docker Hub Description
         uses: peter-evans/dockerhub-description@v4
         with:
-          username: tobix
+          username: itisopen
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          repository: tobix/wine
+          repository: itisopen/wine
           short-description: ${{ github.event.repository.description }}

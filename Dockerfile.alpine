@@ -1,0 +1,31 @@
+FROM alpine:3.21
+LABEL org.opencontainers.image.authors="Lead Dev <lead-dev@tradingassistant.net>"
+
+# renovate: datasource=github-releases depName=krallin/tini
+ARG TINI_VERSION=0.19.0
+
+ADD https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini /tini
+RUN chmod +x /tini
+
+ARG WINE_FLAVOUR=
+#ARG WINE_FLAVOUR=-dev # for development version
+
+RUN \
+	apk update && apk add --no-cache \
+		bash \
+		ca-certificates \
+		curl \
+		gpgv \
+		unzip \
+		vulkan-loader \
+		xauth \
+		xvfb \
+		xvfb-run \
+		wine${WINE_FLAVOUR}
+
+COPY fix-xvfb.sh /tmp/
+
+RUN /tmp/fix-xvfb.sh
+
+ENTRYPOINT ["/tini", "--"]
+CMD ["/bin/bash"]

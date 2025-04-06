@@ -17,7 +17,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Lint
+      - name: Lint Debian Dockerfile
         uses: hadolint/hadolint-action@v3.1.0
         with:
+          dockerfile: Dockerfile.debian
           failure-threshold: error
+
+      - name: Lint Alpine Dockerfile
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile.alpine
+          failure-threshold: error
+  
